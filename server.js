@@ -1,4 +1,5 @@
 const express = require (`express`);
+const PORT = process.env.PORT || 3001;
 
 // instantiate the server
 const app = express();
@@ -6,7 +7,7 @@ const app = express();
 // route for frontend to request data
 const { animals } = require('./data/animals.json');
 
-
+//function to filter through traits to be requested in api call
 function filterByQuery(query, animalsArray){
     let personalityTraitsArray = [];
     // Note that we save the animalsArray as filteredResults here:
@@ -30,7 +31,7 @@ function filterByQuery(query, animalsArray){
     // so at the end we'll have an array of animals that have every one 
     // of the traits when the .forEach() loop is finished.
     filteredResults = filteredResults.filter(
-    animal => animal.personalityTraits.indexOf(trait) !== --1
+    animal => animal.personalityTraits.indexOf(trait) !== -1
     );
     });
     }
@@ -49,7 +50,7 @@ function filterByQuery(query, animalsArray){
 }
 
 // call back function executed when route is accessed
-app.get('/api/animals', (req, res) =>{
+app.get('/api/animals.json', (req, res) =>{
     let results = animals;
     if(req.query){
         results = filterByQuery(req.query, results);
@@ -58,6 +59,6 @@ app.get('/api/animals', (req, res) =>{
 });
 
 // Tell the server to listen for request
-app.listen(3001, () => {
-    console.log (`API server now on port 3001`);
+app.listen(PORT, () => {
+    console.log (`API server now on port ${PORT}!`);
 });
