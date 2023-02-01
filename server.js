@@ -50,7 +50,7 @@ function filterByQuery(query, animalsArray){
 }
 
 // call back function executed when route is accessed
-app.get('/api/animals.json', (req, res) =>{
+app.get('/api/animals', (req, res) =>{
     let results = animals;
     if(req.query){
         results = filterByQuery(req.query, results);
